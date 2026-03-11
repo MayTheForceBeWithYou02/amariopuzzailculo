@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>amariopuzzailculo.it — Il Portale Ufficiale della Verità</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Oswald:wght@400;700&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rosso: #cc0000;
+      --verde: #009246;
+      --giallo: #f5e642;
+      --bianco: #fff8f0;
+      --buio: #111;
+      --puzza: #a8e063;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--buio);
+      color: var(--bianco);
+      font-family: 'Oswald', sans-serif;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E🤢%3C/text%3E%3C/svg%3E") 16 16, auto;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--rosso);
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 3px solid var(--giallo);
+    }
+    .ticker-label {
+      display: inline-block;
+      background: var(--giallo);
+      color: var(--buio);
+      font-family: 'Bebas Neue';
+      font-size: 1.1rem;
+      padding: 0 14px;
+      margin-right: 12px;
+      letter-spacing: 2px;
+    }
+    .ticker-content {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+    @keyframes ticker {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #1a0000 0%, #330000 40%, #000 100%);
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(204,0,0,0.07) 40px,
+        rgba(204,0,0,0.07) 80px
+      );
+    }
+    .hero-emoji {
+      font-size: 6rem;
+      display: block;
+      animation: wobble 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(200,200,0,0.6));
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-6deg) scale(1); }
+      50% { transform: rotate(6deg) scale(1.08); }
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue';
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      letter-spacing: 4px;
+      line-height: 0.9;
+      margin: 20px 0 10px;
+      background: linear-gradient(90deg, var(--rosso), var(--giallo), var(--rosso));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200%;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      from { background-position: 0%; }
+      to { background-position: 200%; }
+    }
+    .hero-sub {
+      font-family: 'Permanent Marker';
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      color: var(--giallo);
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 0 #000;
+    }
+    .badge-ufficiale {
+      display: inline-block;
+      background: var(--verde);
+      color: #fff;
+      font-family: 'Bebas Neue';
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      padding: 5px 16px;
+      border-radius: 2px;
+      border: 2px solid var(--giallo);
+      margin-bottom: 20px;
+    }
+
+    /* ── ODOR METER ── */
+    .odor-section {
+      background: #1a1a1a;
+      padding: 50px 20px;
+      text-align: center;
+      border-top: 4px solid var(--giallo);
+      border-bottom: 4px solid var(--giallo);
+    }
+    .odor-section h2 {
+      font-family: 'Bebas Neue';
+      font-size: 2.5rem;
+      color: var(--giallo);
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+    .meter-container {
+      max-width: 600px;
+      margin: 0 auto 16px;
+    }
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+    .meter-bar-bg {
+      background: #333;
+      border-radius: 999px;
+      height: 28px;
+      overflow: hidden;
+      border: 2px solid #555;
+    }
+    .meter-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #000;
+      transition: width 2s cubic-bezier(.22,.61,.36,1);
+    }
+    .puzza-score {
+      font-family: 'Bebas Neue';
+      font-size: 5rem;
+      color: var(--puzza);
+      text-shadow: 0 0 30px rgba(168,224,99,0.5);
+      line-height: 1;
+    }
+    .puzza-label { font-size: 1rem; color: #888; margin-top: 4px; }
+
+    /* ── STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+    .stat-card {
+      background: #1c1c1c;
+      padding: 30px 20px;
+      text-align: center;
+      border: 1px solid #2a2a2a;
+      transition: transform .2s, border-color .2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--rosso);
+    }
+    .stat-number {
+      font-family: 'Bebas Neue';
+      font-size: 3.5rem;
+      color: var(--rosso);
+      line-height: 1;
+    }
+    .stat-desc { font-size: 0.85rem; color: #999; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Bebas Neue';
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      text-align: center;
+      color: var(--giallo);
+      margin: 60px 0 30px;
+    }
+
+    /* ── TESTIMONIANZE ── */
+    .testimonials {
+      background: #0d0d0d;
+      padding: 10px 20px 60px;
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .testi-card {
+      background: #1a1a1a;
+      border-left: 4px solid var(--rosso);
+      padding: 20px;
+      border-radius: 4px;
+      font-family: 'Comic Neue', cursive;
+      font-size: 0.95rem;
+      color: #ddd;
+      line-height: 1.5;
+      position: relative;
+    }
+    .testi-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: var(--rosso);
+      opacity: 0.2;
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .testi-author {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: #666;
+      font-family: 'Oswald';
+      text-transform: uppercase;
+    }
+    .testi-stars { color: var(--giallo); margin-top: 6px; font-size: 1rem; }
+
+    /* ── PROVE SCIENTIFICHE ── */
+    .science {
+      padding: 20px 20px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .chart-fake {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 30px;
+      text-align: center;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 20px;
+      height: 180px;
+      margin-bottom: 14px;
+    }
+    .bar-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar {
+      width: 50px;
+      border-radius: 4px 4px 0 0;
+      transition: height 1.5s ease;
+      position: relative;
+    }
+    .bar span {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Bebas Neue';
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    .bar-name { font-size: 0.7rem; color: #888; text-align: center; max-width: 60px; }
+    .chart-caption { font-size: 0.75rem; color: #555; font-style: italic; margin-top: 10px; }
+
+    /* ── PETIZIONE ── */
+    .petition {
+      background: linear-gradient(135deg, #1a0000, #000);
+      border: 3px solid var(--rosso);
+      max-width: 600px;
+      margin: 0 auto 60px;
+      padding: 40px 30px;
+      text-align: center;
+      border-radius: 4px;
+    }
+    .petition h3 {
+      font-family: 'Bebas Neue';
+      font-size: 2rem;
+      color: var(--giallo);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    .petition p { color: #bbb; font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+    .counter {
+      font-family: 'Bebas Neue';
+      font-size: 4rem;
+      color: var(--rosso);
+      line-height: 1;
+    }
+    .counter-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    .btn-firma {
+      display: inline-block;
+      background: var(--rosso);
+      color: #fff;
+      font-family: 'Bebas Neue';
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      padding: 14px 40px;
+      border: none;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: transform .15s, background .15s;
+      text-decoration: none;
+    }
+    .btn-firma:hover { background: #ff1a1a; transform: scale(1.06); }
+    .firma-nota { font-size: 0.7rem; color: #444; margin-top: 10px; }
+
+    /* ── GALLERY MEME ── */
+    .meme-gallery {
+      padding: 10px 20px 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .meme-card {
+      background: #1a1a1a;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .meme-card:hover { transform: scale(1.04) rotate(-1deg); }
+    .meme-img-fake {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      gap: 8px;
+      padding: 10px;
+      text-align: center;
+      font-family: 'Impact', 'Bebas Neue';
+      font-size: 1rem;
+      color: white;
+      text-shadow: 2px 2px 0 #000, -2px -2px 0 #000;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .meme-caption {
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      color: #666;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #000;
+      border-top: 3px solid #1a1a1a;
+      padding: 30px 20px;
+      text-align: center;
+      color: #333;
+      font-size: 0.75rem;
+      line-height: 2;
+    }
+    footer span { color: #555; }
+
+    /* ── FLOATING EMOJI ── */
+    .floaters { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .floater {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.07;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(110vh) rotate(0deg); }
+      to { transform: translateY(-10vh) rotate(360deg); }
+    }
+
+    /* ── SHAKE ALERT ── */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px) rotate(-1deg); }
+      75% { transform: translateX(6px) rotate(1deg); }
+    }
+    .shake { animation: shake .5s ease; }
+
+    /* ── BREAKING NEWS HEADER ── */
+    .breaking {
+      background: var(--rosso);
+      padding: 4px 0;
+      text-align: center;
+      font-family: 'Bebas Neue';
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Floaters -->
+  <div class="floaters" id="floaters"></div>
+
+  <!-- Breaking news bar -->
+  <div class="breaking">🚨 BREAKING NEWS 🚨</div>
+
+  <!-- Ticker -->
+  <div class="ticker-wrap">
+    <span class="ticker-label">⚠️ ALLERTA OLFATTIVA</span>
+    <span class="ticker-content">
+      💨 MARIO HA PUZZATO ANCORA • 🇮🇹 IL GOVERNO ITALIANO VALUTA L'EVACUAZIONE •
+      🧪 SCIENZIATI SBIGOTTITI: "NON AVEVAMO MAI MISURATO VALORI DEL GENERE" •
+      🐟 PESCI DEL MEDITERRANEO PROTESTANO • 🚿 I PRODUTTORI DI BAGNOSCHIUMA RINGRAZIANO •
+      📊 INDICE DI PUZZA AI MASSIMI STORICI • 😷 SOLD OUT LE MASCHERINE IN TUTTA LA PROVINCIA •
+      💨 MARIO HA PUZZATO ANCORA • 🌍 ONU CONVOCA RIUNIONE D'EMERGENZA •
+    </span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge-ufficiale">🏛️ PORTALE UFFICIALE DELLA VERITÀ ITALIANA 🏛️</span>
+    <span class="hero-emoji">💨</span>
+    <h1>A MARIO<br>PUZZA IL CULO</h1>
+    <p class="hero-sub">Dal 1987, documentando l'inaccettabile</p>
+  </section>
+
+  <!-- ODOR METER -->
+  <section class="odor-section">
+    <h2>📊 PUZZOMETRO UFFICIALE IN TEMPO REALE</h2>
+
+    <div class="meter-container">
+      <div class="meter-label"><span>Persona Normale</span><span>20 / 100</span></div>
+      <div class="meter-bar-bg"><div class="meter-bar-fill" id="bar1" style="width:0%;background:#4caf50">👍 Accettabile</div></div>
+    </div>
+
+    <div class="meter-container">
+      <div class="meter-label"><span>Cane Bagnato</span><span>55 / 100</span></div>
+      <div class="meter-bar-bg"><div class="meter-bar-fill" id="bar2" style="width:0%;background:#ff9800">🐶 Cagnoloso</div></div>
+    </div>
+
+    <div class="meter-container">
+      <div class="meter-label"><span>Formaggio Avanzato</span><span>72 / 100</span></div>
+      <div class="meter-bar-bg"><div class="meter-bar-fill" id="bar3" style="width:0%;background:#ff5722">🧀 Intenso</div></div>
+    </div>
+
+    <div class="meter-container" style="margin-top:10px">
+      <div class="meter-label"><span style="color:var(--rosso);font-weight:bold">⚠️ MARIO</span><span style="color:var(--rosso);font-weight:bold">97 / 100</span></div>
+      <div class="meter-bar-bg" style="border-color:var(--rosso)"><div class="meter-bar-fill" id="bar4" style="width:0%;background:linear-gradient(90deg,#cc0000,#ff0000,#ffcc00)">💀 CRITICO</div></div>
+    </div>
+
+    <br>
+    <div class="puzza-score" id="scoreDisplay">0</div>
+    <div class="puzza-label">INDICE PUZZA (scala Richter Olfattiva)</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="section-title">📈 DATI CERTIFICATI ISTAT*</div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" data-target="97">0</div>
+      <div class="stat-desc">Percentuale puzza relativa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="1987">0</div>
+      <div class="stat-desc">Anno in cui è iniziato il problema</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="4200">0</div>
+      <div class="stat-desc">Paia di calzini bruciati</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="38">0</div>
+      <div class="stat-desc">Cani svenuti in sua presenza</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="12">0</div>
+      <div class="stat-desc">Deodoranti consumati al mese</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="0">0</div>
+      <div class="stat-desc">Volte che ha risolto il problema</div>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:0.65rem;color:#333;margin-top:-40px;padding-bottom:50px">*I dati sono stati forniti da un amico di un amico che ci ha giurato sulla pizza</p>
+
+  <!-- TESTIMONIANZE -->
+  <section class="testimonials">
+    <div class="section-title">🎙️ TESTIMONIANZE DEI SOPRAVVISSUTI</div>
+    <div class="testi-grid">
+
+      <div class="testi-card">
+        Ero in ascensore con Mario. Ho premuto il tasto del piano sbagliato solo per scappare prima. Sono sceso al seminterrato. Ne valeva la pena.
+        <div class="testi-author">— Gennaro M., Napoli</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+      <div class="testi-card">
+        Il mio gatto ha sviluppato un trauma. Il veterinario non ha capito. Io sì.
+        <div class="testi-author">— Rosaria T., Palermo</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+      <div class="testi-card">
+        Ho creduto di essere arrivata dal dentista e invece era solo l'ufficio di Mario. Ho pianto.
+        <div class="testi-author">— Federica B., Milano</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+      <div class="testi-card">
+        Le piante del corridoio sono morte. Ho chiamato il giardiniere. Ha scoperto il vero motivo. Non è mai tornato.
+        <div class="testi-author">— Enzo P., Bari</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+      <div class="testi-card">
+        Sono un cane poliziotto. Ho annusato Mario durante un controllo di routine. Sono in pensione anticipata.
+        <div class="testi-author">— Rex, Unità Cinofila di Roma</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+      <div class="testi-card">
+        Lavoro in una fabbrica di gorgonzola. Mario è passato. I colleghi hanno detto: "finalmente l'aria è migliorata."
+        <div class="testi-author">— Anonimo, Lombardia</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GRAFICI FALSI -->
+  <div class="section-title">🔬 STUDI SCIENTIFICI (veri*)</div>
+  <div class="science">
+    <div class="chart-fake">
+      <div class="chart-bars" id="chartBars">
+        <!-- generated by JS -->
+      </div>
+      <div style="height:2px;background:#333;max-width:400px;margin:0 auto"></div>
+      <div class="chart-caption">Fig. 1 — Livello di puzza comparato (Unità: Mussolini Olfattivo). Fonte: Università di Castelvolturno, 2024.</div>
+    </div>
+  </div>
+
+  <!-- PETIZIONE -->
+  <div style="padding: 0 20px">
+    <div class="petition">
+      <h3>✍️ FIRMA LA PETIZIONE</h3>
+      <p>Chiediamo al Parlamento Italiano di dichiarare il culo di Mario<br><strong style="color:var(--giallo)">Patrimonio Olfattivo Immateriale dell'Umanità</strong><br><br>
+      (o in alternativa, di obbligarlo a fare la doccia.)</p>
+      <div class="counter" id="counter">0</div>
+      <div class="counter-label">firme raccolte</div>
+      <button class="btn-firma" onclick="firma()">🖊️ FIRMA ORA</button>
+      <div class="firma-nota" id="firma-msg">Firmando accetti che Mario puzza. Il che è ovvio.</div>
+    </div>
+  </div>
+
+  <!-- GALLERY MEME -->
+  <div class="meme-gallery">
+    <div class="section-title">🖼️ GALLERIA D'ARTE CONTEMPORANEA</div>
+    <div class="meme-grid" id="memeGrid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="font-family:'Bebas Neue';font-size:1.5rem;color:#222;letter-spacing:3px;margin-bottom:10px">amariopuzzailculo.it</div>
+    <span>© 2025 Fondazione Olfattiva Italiana — Tutti i diritti riservati</span><br>
+    <span>Questo sito è satira. Mario potrebbe anche non puzzare. Ma probabilmente sì.</span><br>
+    <span>Nessun animale è stato ferito nella realizzazione di questo sito. Però hanno sofferto.</span><br><br>
+    <span style="font-size:0.6rem">Powered by: dignità perduta • caffè • astio • amore (per la puzza)</span>
+  </footer>
+
+<script>
+  // ── FLOATERS ──
+  const emojis = ['💨','🤢','😷','🦨','🧦','👃','💀','🚿','🧴'];
+  const container = document.getElementById('floaters');
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'floater';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = (12 + Math.random() * 20) + 's';
+    el.style.animationDelay = (-Math.random() * 20) + 's';
+    el.style.fontSize = (1 + Math.random() * 2) + 'rem';
+    container.appendChild(el);
+  }
+
+  // ── METER BARS ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('bar1').style.width = '20%';
+      document.getElementById('bar2').style.width = '55%';
+      document.getElementById('bar3').style.width = '72%';
+      document.getElementById('bar4').style.width = '97%';
+    }, 400);
+
+    // Score count up
+    let s = 0;
+    const scoreEl = document.getElementById('scoreDisplay');
+    const scoreInterval = setInterval(() => {
+      s = Math.min(s + 2, 97);
+      scoreEl.textContent = s;
+      if (s >= 97) clearInterval(scoreInterval);
+    }, 30);
+  });
+
+  // ── STAT COUNTUP ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target / 60));
+        const iv = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current.toLocaleString('it-IT');
+          if (current >= target) clearInterval(iv);
+        }, 25);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+
+  // ── CHART ──
+  const chartData = [
+    { label: 'Persona\nnormale', val: 15, color: '#4caf50', emoji: '😊' },
+    { label: 'Cane\nbagnato', val: 42, color: '#ff9800', emoji: '🐶' },
+    { label: 'Formaggio\nvecchio', val: 65, color: '#ff5722', emoji: '🧀' },
+    { label: 'Canale\nfognario', val: 80, color: '#b71c1c', emoji: '🚽' },
+    { label: 'MARIO', val: 97, color: '#ff0000', emoji: '😈' },
+  ];
+  const maxVal = 97;
+  const maxPx = 160;
+  const chartEl = document.getElementById('chartBars');
+  chartData.forEach(d => {
+    const height = Math.round((d.val / maxVal) * maxPx);
+    chartEl.innerHTML += `
+      <div class="bar-item">
+        <div class="bar" style="height:${height}px;background:${d.color}">
+          <span style="color:${d.color}">${d.val}</span>
+        </div>
+        <div class="bar-name">${d.emoji}<br>${d.label}</div>
+      </div>`;
+  });
+
+  // ── COUNTER ──
+  let signatures = 69420;
+  document.getElementById('counter').textContent = signatures.toLocaleString('it-IT');
+
+  function firma() {
+    signatures++;
+    const el = document.getElementById('counter');
+    el.textContent = signatures.toLocaleString('it-IT');
+    el.classList.remove('shake');
+    void el.offsetWidth;
+    el.classList.add('shake');
+    const msg = document.getElementById('firma-msg');
+    const messages = [
+      '✅ Firma registrata! Grazie per la tua coraggiosa testimonianza.',
+      '✅ Aggiunto al registro. Il mondo ti ringrazia.',
+      '✅ Un altro soldato nella battaglia olfattiva.',
+      '✅ Firmato! La tua narice non dimenticherà.',
+      '✅ Iscritto. Dio ti benedica.',
+    ];
+    msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+    msg.style.color = '#a8e063';
+  }
+
+  // ── MEMES ──
+  const memes = [
+    { bg:'#1a0000', emoji:'🦨', top:'QUANDO MARIO', bot:'ENTRA IN STANZA', color:'#ff4444' },
+    { bg:'#000e1a', emoji:'👃', top:'IL MIO NASO', bot:'HA CHIAMATO I CARABINIERI', color:'#44aaff' },
+    { bg:'#0d1a00', emoji:'🌿', top:'LE PIANTE', bot:'SI SONO DIMESSE', color:'#88cc44' },
+    { bg:'#1a1a00', emoji:'🧴', top:'NECESSITÀ DI', bot:'DEODORANTE: CRITICA', color:'#ffcc00' },
+    { bg:'#1a000d', emoji:'😷', top:'MASCHERINE:', bot:'NON BASTANO', color:'#ff88cc' },
+    { bg:'#0d0d1a', emoji:'💨', top:'LA DIREZIONE', bot:'DEL VENTO: VERSO DI NOI', color:'#aa88ff' },
+  ];
+  const memeGrid = document.getElementById('memeGrid');
+  memes.forEach(m => {
+    memeGrid.innerHTML += `
+      <div class="meme-card">
+        <div class="meme-img-fake" style="background:${m.bg};font-size:0.9rem">
+          <div style="color:${m.color};font-family:'Impact',sans-serif;font-size:1rem">${m.top}</div>
+          <div style="font-size:3.5rem">${m.emoji}</div>
+          <div style="color:${m.color};font-family:'Impact',sans-serif;font-size:1rem">${m.bot}</div>
+        </div>
+        <div class="meme-caption">#amariopuzzailculo #veritàitaliana</div>
+      </div>`;
+  });
+</script>
+</body>
+</html>
